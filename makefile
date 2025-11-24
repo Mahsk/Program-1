@@ -25,6 +25,7 @@ fila.o: fila.c fila.h
 fprio.o: fprio.c fprio.h
 mundo.o: mundo.c mundo.h 
 func.o: func.c func.h
+func_eventos.o = func_eventos.c func_eventos.h
 
 # executar
 run: $(MAIN)

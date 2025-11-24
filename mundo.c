@@ -27,26 +27,26 @@ struct mundo_t *cria_mundo() {
     world->relogio = 0 ;
 
     //Alocar os heróis 
-    world->heroi = malloc(sizeof(struct heroi_t) * world->NHerois) ; //espaço para a estrutura do heroi para a quantidade de herois
+    world->herois = malloc(sizeof(struct herois_t) * world->NHerois) ; //espaço para a estrutura do heroi para a quantidade de herois
     
-    if(!world->heroi) {
+    if(!world->herois) {
         free(world) ;
         return NULL ;
     }
     
     //Inicializa os herois  
     for(int i = 0; i < world->NHerois; i++) {
-        world->heroi[i].id = i ;
-        world->heroi[i].experiencia = 0 ;
-        world->heroi[i].paciencia = aleat(0,100) ; 
-        world->heroi[i].velocidade = aleat(50,5000) ;
+        world->herois[i].id = i ;
+        world->herois[i].experiencia = 0 ;
+        world->herois[i].paciencia = aleat(0,100) ; 
+        world->herois[i].velocidade = aleat(50,5000) ;
 
         //Cria habilidades aleatórias 
         int qntdd_habilidades = aleat(1,3) ;
-        world->heroi[i].habilidades = cjto_aleat(qntdd_habilidades, world->NHabilidades) ;
+        world->herois[i].habilidades = cjto_aleat(qntdd_habilidades, world->NHabilidades) ;
 
-        if(!world->heroi[i].habilidades) {
-            free(world->heroi) ; //libera os herois
+        if(!world->herois[i].habilidades) {
+            free(world->herois) ; //libera os herois
             free(world) ; 
             return NULL ;
         }
@@ -122,12 +122,12 @@ struct mundo_t *cria_mundo() {
         void destroi_mundo(struct mundo_t *world) {
             
             //Destroi herois
-            if(world->heroi) {
+            if(world->herois) {
                 for(int i = 0; i < world->NHerois; i++) {
-                    if(world->heroi[i].habilidades)
-                        cjto_destroi(world->heroi[i].habilidades) ;
+                    if(world->herois[i].habilidades)
+                        cjto_destroi(world->herois[i].habilidades) ;
                 }
-                free(world->heroi) ;
+                free(world->herois) ;
             }
 
             //Destroi bases
