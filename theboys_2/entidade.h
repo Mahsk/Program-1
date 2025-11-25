@@ -13,6 +13,7 @@ struct herois_t {
     int paciencia ;
     int velocidade ;
     int experiencia ;
+    int base_atual ;
 } ;
 
 struct bases_t {
