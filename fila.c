@@ -81,10 +81,11 @@ int fila_retira (struct fila_t *f, int *item) {
     f->num-- ; //atualiza o tamanho da fila 
     
     if(!f->num) //atualiza o final da fila
-        f->num = 0 ;
+        f->ult = NULL;
 
     free(atual) ; //libera o ponteiro 
-    return 0 ;
+    
+    return 1 ;
 }
 
 // Informa o número de itens na fila.

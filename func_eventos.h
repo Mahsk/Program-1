@@ -1,9 +1,9 @@
 #ifndef  FUNC_EVENTOS
 #define FUNC_EVENTOS
 
-struct evento_t *cria_evento(struct fprio_t *lef, int tempo, int heroi, int base) ;
+struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) ;
 
-struct evento_t *cria_e_insere_lef(struct mundo_t *world, struct fprio_t *lef) ;
+struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base) ;
 
 
 #endif
