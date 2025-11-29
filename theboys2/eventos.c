@@ -38,11 +38,11 @@ void evento_chega(struct mundo_t *world,struct fprio_t *lef, int tempo, int hero
     cria e insere na LEF o evento DESISTE (agora, H, B)*/
     //Decide o próximo evento 
     if(espera == 1) {
-        insere_lef(lef,tempo,ESPERA,heroi,base) ;
+        insere_lef(lef,tempo,ESPERA,heroi,base,-1) ;
         printf("%6d: CHEGA HEROI %2d BASE %d (%2d/%2d) ESPERA\n", tempo, heroi, base, presentes, b->lotacao) ;
     }
     else {
-        insere_lef(lef,tempo, DESISTE,heroi,base) ;
+        insere_lef(lef,tempo, DESISTE,heroi,base,-1) ;
         printf("%6d: CHEGA HEROI %2d BASE %d (%2d/%2d) DESISTE\n", tempo, heroi, base, presentes,b->lotacao)  ;
     }
 }
@@ -62,7 +62,7 @@ void evento_espera(struct mundo_t *world, struct fprio_t *lef, int tempo, int he
     fila_insere(b->espera, heroi );
 
     //Cria o evento avisa para o porteiro 
-    insere_lef(lef,tempo, AVISA,-1, base ); //-1 no lugar de heroi, pq só a base é utilizada
+    insere_lef(lef,tempo, AVISA,-1, base,-1); //-1 no lugar de heroi, pq só a base é utilizada
 
     printf("%6d: ESPERA HEROI %2d BASE %d (%2d)\n", tempo, heroi, base, fila_tamanho(b->espera)) ;
 }
@@ -77,7 +77,7 @@ void evento_desiste(struct mundo_t *world, struct fprio_t *lef, int tempo, int h
 
     int d = aleat(0, world->NBases -1) ; //escolhe uma base destino aleatoria 
 
-    insere_lef(lef, tempo, VIAJA, heroi, d) ; 
+    insere_lef(lef, tempo, VIAJA, heroi, d,-1) ; 
 
     printf("%6d: DESISTE HEROI %2d BASE %d\n", tempo, heroi, base) ;
 }
@@ -91,7 +91,6 @@ void evento_avisa(struct mundo_t *world, struct fprio_t *lef, int tempo, int bas
     
     struct bases_t *b = &world->bases[base] ;
  
-
     while((b->lotacao - cjto_card(b->presentes)) > 0 && fila_tamanho(b->espera) > 0) {
         
         //retira o primeiro heroi da fila 
@@ -101,11 +100,14 @@ void evento_avisa(struct mundo_t *world, struct fprio_t *lef, int tempo, int bas
         printf("ver herois ANTES DE AVISA: ") ;
         cjto_imprime(b->presentes) ;
         printf("\n") ;
+
         //adiciona o heroi na base
         cjto_insere(b->presentes,prim_fila) ;
+        //atualiza a base
+        world->herois[prim_fila].base_atual = base ;
 
         //insere o evento ENTRA (agora, H’, B)
-        insere_lef(lef,tempo,ENTRA,prim_fila,base) ;
+        insere_lef(lef,tempo,ENTRA,prim_fila,base,-1) ;
 
         printf("%6d: AVISA PORTEIRO BASE %d ADMITE %2d\n",tempo, base, prim_fila) ;
     }
@@ -143,7 +145,7 @@ void evento_entra(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
     printf("%6d: ENTRA HEROI %2d BASE %d (%2d/%2d) SAI %d\n", tempo, heroi,base, presentes,b->lotacao, tempo_de_saida);
 
     //cria e insere na LEF o evento SAI (agora + TPB, H, B)
-    insere_lef(lef, tempo_de_saida, SAI, heroi, base) ;
+    insere_lef(lef, tempo_de_saida, SAI, heroi, base,-1) ;
 }
 
 /*O her´oi H sai da base B. Ao sair, escolhe uma base de destino para viajar; o
@@ -174,10 +176,10 @@ void evento_sai(struct mundo_t *world, struct fprio_t *lef, int tempo, int heroi
     printf("%6d: SAI HEROI %2d BASE %d (%2d/%2d)\n", tempo, heroi, base, presentes, b->lotacao);
 
     //heroi ao sair da base escolhe uma base destino para viajar
-    insere_lef(lef, tempo, VIAJA, heroi, d) ;
+    insere_lef(lef, tempo, VIAJA, heroi, d,-1) ;
 
     //o porteiro é avisado 
-    insere_lef(lef, tempo, AVISA, -1, base) ;
+    insere_lef(lef, tempo, AVISA, -1, base,-1) ;
 }
 
 /*O her´oi H se desloca para uma base D (que pode ser a mesma onde j´a est´a):
@@ -204,7 +206,7 @@ void evento_viaja(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
 
     printf("%6d: VIAJA HEROI %2d BASE %d BASE %d DIST %d VEL %d CHEGA %d\n", tempo, heroi, base, destn, distancia, h->velocidade, tempo_chegada) ;
 
-    insere_lef(lef,tempo_chegada, CHEGA, heroi, d) ;
+    insere_lef(lef,tempo_chegada, CHEGA, heroi, d,-1) ;
 }
 
 /*O her´oi H morre no instante T.
@@ -229,7 +231,7 @@ void evento_morre(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
 
     printf("%6d: MORRE HEROI %2d MISSAO %d\n", tempo, heroi, missao ) ;
     //cria o evento avisa
-    insere_lef(lef, tempo, AVISA, -1, base) ;
+    insere_lef(lef, tempo, AVISA, -1, base,-1) ;
 }  
 
 void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int missao) {
@@ -265,11 +267,11 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
                 B_apta_MP = i ;
             }
         } else 
-            if (distancia < menor_distancia_naoApta) {
-                menor_distancia_naoApta = distancia ;
-                BMP = i ;
+                if ((distancia < menor_distancia_naoApta) && (cjto_card(world->bases[i].presentes))) {
+                    menor_distancia_naoApta = distancia ;
+                    BMP = i ;
+                }
             }
-    }
         printf("BMP: %d\n", BMP) ;
         printf("menor distancia: %d\n", menor_distancia) ;
         printf("base APTA mais proxima: %d\n", B_apta_MP) ;
@@ -291,13 +293,12 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
             incrementa_experiencia(world, B_apta_MP) ;
             printf("ver incremento_exp DEPOIS: %d\n", world->herois[h].experiencia) ;
         }
-            
-    }  else {
+    }else {
         printf("ver qtdd de COMPOSTO V ANTES DE ENTRAR NO IF: %d\n", world->NCompostosV) ;
         printf("ver TEMPO antes de entrar no if %d\n", tempo) ;
 
         //se há compostos V e o tempo for multiplo de 2500
-        if(world->NCompostosV > 0 ) {
+        if(world->NCompostosV > 0 && tempo % 2500 == 0 && BMP != -1) {
 
             printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
             //decrementa a quantidade de compostosV
@@ -312,20 +313,17 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
             //chama o heroi mais experiente
             int h_experiente = heroi_experiente(world, BMP) ;
             printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
-            //o heroi mais experiente morre apos o uso do Composto V
-            insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
-            }
-        }
-    }
-    
-/*       //o heroi mais experiente morre apos o uso do Composto V
-        insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
 
-        //incrementa a experiencia dos outros herois presentes
-        incrementa_experiencia(world, BMP) ;
-        } *//*  else {
+            //o heroi mais experiente morre apos o uso do Composto V
+            insere_lef(lef, tempo, MORRE, h_experiente, BMP,-1) ;
+
+            //incrementa a experiencia dos outros herois presentes
+            incrementa_experiencia(world, BMP) ;
+        } else { 
             //se nao houver base apta e nem puder usar o compostoV, marca a missao como impossivel e adia 24 horas
             printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, missao) ;        
-            insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 ); 
-        } */
-        
+            insere_lef(lef, tempo + (24*60), MISSAO,-1,-1,missao); 
+        }
+    }
+}
+

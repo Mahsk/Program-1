@@ -108,7 +108,6 @@ struct mundo_t *cria_mundo() {
             struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
                 evento->heroi = i ;
                 evento->base = aleat(0, world->NBases -1) ;
-                world->herois[i].base_atual = evento->base ;
                 evento->tempo = aleat(0,4320) ;
                 evento->tipo = CHEGA ;
                 fprio_insere(lef, evento, CHEGA, evento->tempo) ;

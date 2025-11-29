@@ -11,7 +11,7 @@ int aleat(int min, int max) {
     return (rand()%(max - min + 1)) + min;
 }
 
-struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) {
+struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) {
     struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
     if(!evento)
         return NULL ;
@@ -20,12 +20,13 @@ struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) {
     evento->tipo = tipo ;
     evento->heroi = heroi;
     evento->base = base ;
+    evento->missao = missao ;
 
     return evento ;
 }
 
-struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base) {
-    struct evento_t *novo_evento = cria_evento(tempo,tipo,heroi,base) ;
+struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base,int missao) {
+    struct evento_t *novo_evento = cria_evento(tempo,tipo,heroi,base,missao) ;
 
     if(!novo_evento)
         return NULL;
@@ -104,7 +105,7 @@ int heroi_experiente(struct mundo_t *world, int BMP) {
 void incrementa_experiencia(struct mundo_t *world, int BMP) {
 
     for(int h = 0; h < world->NHerois; h++){
-        if(world->herois[h].base_atual == BMP)
+        if(world->herois[h].base_atual == BMP && cjto_pertence(world->bases[BMP].presentes,h))
             world->herois[h].experiencia++ ;
     }
 }

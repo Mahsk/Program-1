@@ -3,9 +3,9 @@
 
 int aleat(int min, int max) ;
 
-struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) ;
+struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) ;
 
-struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base) ;
+struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base,int missao) ;
 
 int distancia_cartesiana(struct mundo_t *world,int origem, int destino) ;
 
