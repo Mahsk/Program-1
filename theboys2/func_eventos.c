@@ -82,13 +82,10 @@ int heroi_experiente(struct mundo_t *world, int B_apta_MP) {
     return h_MoreExp ;
 }
 
-int incrementa_experiencia(struct mundo_t *world, int B_apta_MP) {
-    
-    int exp_total ;
+void incrementa_experiencia(struct mundo_t *world, int B_apta_MP) {
 
     for(int h = 0; h < world->NHerois; h++){
         if(world->herois[h].base_atual == B_apta_MP)
-            exp_total = world->herois[h].experiencia++ ;
+            world->herois[h].experiencia++ ;
     }
-    return exp_total;
 }

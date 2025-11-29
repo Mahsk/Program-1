@@ -289,14 +289,14 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
         world->missoes_cumpridas++ ;
         printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
 
-        printf("ver incremento_exp ANTES: %d\n", world->herois->experiencia) ;
-        incrementa_experiencia(world, B_apta_MP) ;
-        printf("ver incremento_exp DEPOIS: %d\n", world->herois->experiencia) ;
- 
+        for(int h = 0; h < world->NHerois; h++){
+            printf("ver incremento_exp ANTES: %d\n", world->herois[h].experiencia) ;
+            //incrementa a experiencia dos herois presentes na base mais proxima
+            incrementa_experiencia(world, B_apta_MP) ;
+            printf("ver incremento_exp DEPOIS: %d\n", world->herois[h].experiencia) ;
+        }
 
-        //incrementa a experiencia dos herois presentes na base mais proxima
-        world->herois[B_apta_MP].experiencia++ ; 
-    } /* else {
+    } /* else 
         //se há compostos V e o tempo for multiplo de 2500
         if(world->NCompostosV != 0 && tempo % 2500 == 0) {
             //decrementa a quantidade de compostosV
@@ -311,11 +311,10 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
             //incrementa a experiencia dos herois presentes
             incrementa_experiencia(world, BMP) ;
         }
-        else {
+        else 
             //se nao houver base apta e nem puder usar o compostoV, marca a missao como impossivel e adia 24 horas
             printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, missao) ;        
-            insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 );
-        }  */
-           /*  return ; */
-/*     } */
-}    
+            insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 ); 
+}
+
+ */
