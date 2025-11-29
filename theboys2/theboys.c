@@ -65,7 +65,7 @@ int main() {
    /*          case FIM:
                 break;
         }*/
-        
+        }
         free(evento);
     }
     

@@ -280,7 +280,7 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
     
     if (B_apta_MP != -1) {
         
-        printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [", tempo, missao, BMP) ;
+        printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [", tempo, missao, B_apta_MP) ;
         cjto_imprime(world->bases[B_apta_MP].presentes) ;
         printf(" ]\n") ;
 
@@ -289,7 +289,9 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
         world->missoes_cumpridas++ ;
         printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
 
+        printf("ver incremento_exp ANTES: %d\n", world->herois->experiencia) ;
         incrementa_experiencia(world, B_apta_MP) ;
+        printf("ver incremento_exp DEPOIS: %d\n", world->herois->experiencia) ;
  
 
         //incrementa a experiencia dos herois presentes na base mais proxima
