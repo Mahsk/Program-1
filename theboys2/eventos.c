@@ -243,13 +243,13 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
     int B_apta_MP = -1;
     
 
-    for (int i = 0; i <  world-> NBases; i++) {
+    //contador de tentativas
+    int tenta = m->tentativas++ ;
+    printf("%6d: MISSAO %d TENT %d HAB REQ: [", tempo, missao, tenta);
+    cjto_imprime(m->habilidades) ;
+    printf("]\n") ;  
 
-        //contador de tentativas
-        int tenta = m->tentativas++ ;
-        printf("%6d: MISSAO %d TENT %d HAB REQ: [", tempo, world->missoes->id, tenta);
-        cjto_imprime(m->habilidades) ;
-        printf("]\n") ; 
+    for (int i = 0; i <  world-> NBases; i++) {
 
         //calcula a distancia de cada base ao local da missao M
         int distancia = distancia_cart_BM(world->bases[i].local, world->missoes[missao].local) ;
@@ -279,24 +279,31 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
 
     if (B_apta_MP != -1) {
 
-        printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [", tempo, missao, B_apta_MP) ;
-        cjto_imprime(world->bases[B_apta_MP].presentes) ;
+        printf("%6d: MISSAO %d BASE %d DIST %d HEROIS [ ",tempo, missao, B_apta_MP, menor_distancia) ;
+        cjto_imprime(world->bases[B_apta_MP].presentes);
+        printf(" ]\n") ;
+        
+        printf("%6d: MISSAO %d UNIAO HAB BASE %d: [ ",tempo, missao, B_apta_MP) ;
+        cjto_imprime(world->bases[B_apta_MP].habilidades);
+        printf(" ]\n") ;
+        
+        //marca a missao como cumprida
+        world->missoes_cumpridas++ ;
+        printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [ ",tempo, missao, B_apta_MP) ;
+        cjto_imprime(world->bases[B_apta_MP].habilidades) ;
         printf(" ]\n") ;
 
-        //marca a missao como cumprida
-        printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
-        world->missoes_cumpridas++ ;
-        printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
-
         for(int h = 0; h < world->NHerois; h++){
-            printf("ver incremento_exp ANTES: %d\n", world->herois[h].experiencia) ;
             //incrementa a experiencia dos herois presentes na base mais proxima
             incrementa_experiencia(world, B_apta_MP) ;
-            printf("ver incremento_exp DEPOIS: %d\n", world->herois[h].experiencia) ;
+
+            printf("%6d: MISSAO %d HAB HEROI %2d: [  ",tempo, missao, h) ;
+            cjto_imprime(world->herois[h].habilidades) ;
+            printf(" ]\n") ;
         }
     }else {
-        printf("ver qtdd de COMPOSTO V ANTES DE ENTRAR NO IF: %d\n", world->NCompostosV) ;
-        printf("ver TEMPO antes de entrar no if %d\n", tempo) ;
+/*         printf("ver qtdd de COMPOSTO V ANTES DE ENTRAR NO IF: %d\n", world->NCompostosV) ;
+        printf("ver TEMPO antes de entrar no if %d\n", tempo) ; */
 
         //se há compostos V e o tempo for multiplo de 2500
         if(world->NCompostosV > 0 && tempo % 2500 == 0 && BMP != -1) {
@@ -328,3 +335,12 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
     }
 }
 
+void evento_fim(struct mundo_t *world,int tempo) {
+
+    printf("%6d: FIM", tempo) ;
+
+
+
+
+    destroi_mundo(world) ;
+}
