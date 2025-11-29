@@ -1,9 +1,13 @@
 #ifndef  FUNC_EVENTOS
 #define FUNC_EVENTOS
 
+int aleat(int min, int max) ;
+
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) ;
 
 struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base) ;
+
+int distancia_cartesiana(struct mundo_t *world,int origem, int destino) ;
 
 int distancia_cart_BM(struct coordenadas_t base, struct coordenadas_t missao) ;
 

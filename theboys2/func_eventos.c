@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "entidade.h"
 #include "mundo.h"
 #include "fprio.h"
 #include "eventos.h"
+
+int aleat(int min, int max) {
+    //return min + rand() % (max - min + 1) ;
+    return (rand()%(max - min + 1)) + min;
+}
 
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base) {
     struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
@@ -28,6 +34,20 @@ struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi,
 
     return novo_evento ;
 }
+
+int distancia_cartesiana(struct mundo_t *world,int origem, int destino) {
+
+    int x1 = world->bases[origem].local.x ;
+    int x2 = world->bases[destino].local.x ;
+    int y1 = world->bases[origem].local.y ;
+    int y2 = world->bases[destino].local.y ;
+
+    int dx = x2 -x1  ;
+    int dy = y2 - y1 ;
+    double dc = (double)(dx * dx) + (double)(dy * dy) ;
+
+    return (int)(sqrt(dc)) ;
+} 
 
 int distancia_cart_BM(struct coordenadas_t base, struct coordenadas_t missao) {
 

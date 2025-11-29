@@ -3,9 +3,9 @@
 #include <time.h>
 #include "mundo.h"
 #include "entidade.h"
-#include "func.h"
 #include "fila.h"
 #include "fprio.h"
+#include "func_eventos.h"
 #include "eventos.h"
 
 //Criar mundo 
@@ -72,7 +72,7 @@ struct mundo_t *cria_mundo() {
         world->bases[i].local.x = aleat(0, N_TAMANHO_MUNDO - 1);
         world->bases[i].local.y = aleat(0, N_TAMANHO_MUNDO -1 ) ;
         world->bases[i].lotacao = aleat(3,10) ;
-        world->bases[i].presentes = cjto_cria(world->NHerois -1) ;
+        world->bases[i].presentes = cjto_cria(world->NHerois) ;
         world->bases[i].espera = fila_cria() ;
         world->bases[i].habilidades = cjto_cria(world->NHabilidades) ;
 

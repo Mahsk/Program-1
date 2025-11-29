@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <limits.h>
 #include "mundo.h"
-#include "func.h"
 #include "entidade.h"
 #include "fprio.h"
 #include "fila.h"
@@ -237,7 +236,7 @@ void evento_morre(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
     insere_lef(lef, tempo, AVISA, -1, base) ;
 }  
 
-void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, int missao) {
+void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef, */ int tempo, int missao) {
 
     struct missoes_t *m = &world->missoes[missao] ;
     int menor_distancia = world->TamanhoMundo*2;
@@ -296,25 +295,37 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
             printf("ver incremento_exp DEPOIS: %d\n", world->herois[h].experiencia) ;
         }
 
-    } /* else 
+    }else {
         //se há compostos V e o tempo for multiplo de 2500
         if(world->NCompostosV != 0 && tempo % 2500 == 0) {
+
+            printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
             //decrementa a quantidade de compostosV
             world->NCompostosV--;
+            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
+
+            printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
             //marca a missao como cumprida
             world->missoes_cumpridas++;
+            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
+
+
             //chama o heroi mais experiente
             int h_experiente = heroi_experiente(world, BMP) ;
+            printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
+        }
+    }
+/* 
             //o heroi mais experiente morre apos o uso do Composto V
             insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
 
             //incrementa a experiencia dos herois presentes
             incrementa_experiencia(world, BMP) ;
-        }
-        else 
+        } else {
             //se nao houver base apta e nem puder usar o compostoV, marca a missao como impossivel e adia 24 horas
             printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, missao) ;        
             insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 ); 
+        }
+    }
+    return ; */
 }
-
- */
