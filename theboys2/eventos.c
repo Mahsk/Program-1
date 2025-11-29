@@ -242,13 +242,13 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
     int BMP = -1;
     int B_apta_MP = -1;
    
-    for (int i = 0; i <  world-> NBases; i++) {
+    //contador de tentativas
+    int tenta = m->tentativas++ ;
+    printf("%6d: MISSAO %d TENT %d HAB REQ: [", tempo, missao, tenta);
+    cjto_imprime(m->habilidades) ;
+    printf("]\n") ; 
 
-        //contador de tentativas
-        int tenta = m->tentativas++ ;
-        printf("%6d: MISSAO %d TENT %d HAB REQ: [", tempo, missao, tenta);
-        cjto_imprime(m->habilidades) ;
-        printf("]\n") ; 
+    for (int i = 0; i <  world-> NBases; i++) {
 
         //calcula a distancia de cada base ao local da missao M
         int distancia = distancia_cart_BM(world->bases[i].local, world->missoes[missao].local) ;
