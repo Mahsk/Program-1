@@ -53,6 +53,7 @@ int distancia_cartesiana(struct mundo_t *world,int origem, int destino) {
 int distancia_cart_BM(struct coordenadas_t base, struct coordenadas_t missao) {
 
     double dc ;
+    
     dc = pow((missao.x - base.x),2) + pow((missao.y - base.y),2) ;
     
     return (int)(sqrt(dc)) ;

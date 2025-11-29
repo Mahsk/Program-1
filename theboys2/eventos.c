@@ -367,11 +367,11 @@ void evento_fim(struct mundo_t *world,int tempo) {
         printf("contar VIVOS %d\n", cont_vivo) ;
     }
 
-    for(int i = 0; i < world->NBases; i++) {
+/*     for(int i = 0; i < world->NBases; i++) {
 
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", world->bases[i].id, world->bases[i].lotacao,world->bases[i].fila_max, world->bases[i].contador_missoes) ;
 
-    } 
+    }  */
      
     /* destroi_mundo(world) ; */
 }
