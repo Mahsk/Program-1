@@ -26,7 +26,7 @@ void evento_chega(struct mundo_t *world,struct fprio_t *lef, int tempo, int hero
     int presentes = cjto_card(b->presentes) ;
     int vagas = (b->lotacao - presentes) ;
 
-    int espera ;
+    int espera = 0 ;
     if(vagas > 0 && tamanho_fila_espera == 0) //Há vagas e a fila está vazia
         espera = 1 ;
     else    
@@ -98,6 +98,9 @@ void evento_avisa(struct mundo_t *world, struct fprio_t *lef, int tempo, int bas
         int prim_fila ; 
         fila_retira(b->espera,&prim_fila) ;
 
+        printf("ver herois ANTES DE AVISA: ") ;
+        cjto_imprime(b->presentes) ;
+        printf("\n") ;
         //adiciona o heroi na base
         cjto_insere(b->presentes,prim_fila) ;
 
@@ -122,13 +125,6 @@ void evento_entra(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
     struct bases_t *b = &world->bases[base] ;
 
     printf("imprime as herois antes de  entraram na base %d ",base);
-    cjto_imprime(b->presentes) ;
-    printf("\n") ;
-
-    //insere o heroi na base
-    cjto_insere(b->presentes,heroi) ;
-
-    printf("imprime as herois depois de  entraram na base %d ",base);
     cjto_imprime(b->presentes) ;
     printf("\n") ;
 
@@ -236,7 +232,7 @@ void evento_morre(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
     insere_lef(lef, tempo, AVISA, -1, base) ;
 }  
 
-void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef, */ int tempo, int missao) {
+void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef,  */int tempo, int missao) {
 
     struct missoes_t *m = &world->missoes[missao] ;
     int menor_distancia = world->TamanhoMundo*2;
@@ -270,15 +266,10 @@ void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef, */ int tempo, 
         }
     }
         printf("menor distancia: %d\n", menor_distancia) ;
-        printf("BMP: %d\n", BMP) ;
-    
-        int base_mais_proxima = BMP;
-        printf ("base mais proxima:%d\n", base_mais_proxima);
-
         printf("base APTA mais proxima: %d\n", B_apta_MP) ;
-    
+
     if (B_apta_MP != -1) {
-        
+
         printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [", tempo, missao, B_apta_MP) ;
         cjto_imprime(world->bases[B_apta_MP].presentes) ;
         printf(" ]\n") ;
@@ -294,38 +285,37 @@ void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef, */ int tempo, 
             incrementa_experiencia(world, B_apta_MP) ;
             printf("ver incremento_exp DEPOIS: %d\n", world->herois[h].experiencia) ;
         }
-
-    }else {
+            
+    }  else {
+        printf("ver qtdd de COMPOSTO V ANTES DE ENTRAR NO IF: %d\n", world->NCompostosV) ;
+        printf("ver TEMPO antes de entrar no if %d\n", tempo) ;
         //se há compostos V e o tempo for multiplo de 2500
-        if(world->NCompostosV != 0 && tempo % 2500 == 0) {
+        if(world->NCompostosV > 0 && tempo % 2500 == 0 ) {
 
-            printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
-            //decrementa a quantidade de compostosV
-            world->NCompostosV--;
-            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
+        printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
+        //decrementa a quantidade de compostosV
+        world->NCompostosV--;
+        printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
 
-            printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
-            //marca a missao como cumprida
-            world->missoes_cumpridas++;
-            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
+        printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
+        //marca a missao como cumprida
+        world->missoes_cumpridas++;
+        printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
 
+        //chama o heroi mais experiente
+        int h_experiente = heroi_experiente(world, BMP) ;
+         printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
+    
+/*       //o heroi mais experiente morre apos o uso do Composto V
+        insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
 
-            //chama o heroi mais experiente
-            int h_experiente = heroi_experiente(world, BMP) ;
-            printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
-        }
-    }
-/* 
-            //o heroi mais experiente morre apos o uso do Composto V
-            insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
-
-            //incrementa a experiencia dos herois presentes
-            incrementa_experiencia(world, BMP) ;
-        } else {
+        //incrementa a experiencia dos outros herois presentes
+        incrementa_experiencia(world, BMP) ;
+        } *//*  else {
             //se nao houver base apta e nem puder usar o compostoV, marca a missao como impossivel e adia 24 horas
             printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, missao) ;        
             insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 ); 
+        } */
         }
     }
-    return ; */
 }

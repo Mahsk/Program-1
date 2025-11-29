@@ -64,7 +64,7 @@ void evento_viaja(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
 
 void evento_morre(struct mundo_t *world, struct fprio_t *lef, int tempo, int heroi, int base) ;
 
-void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, int missao) ;
+void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */  int tempo, int missao) ;
 
 
 #endif
