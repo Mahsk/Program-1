@@ -23,28 +23,16 @@ int main() {
     fprio_imprime(lef);
     printf("\n");
 
-    /*printf("DEBUG: T_FIM_DO_MUNDO = %d\n", T_FIM_DO_MUNDO);
-    printf("DEBUG: world->relogio inicial = %d\n", world->relogio);*/
 
     while (world->relogio < T_FIM_DO_MUNDO) {
         int tipo, prio;
         struct evento_t *evento = fprio_retira(lef, &tipo, &prio);
 
         if (!evento) {
-           // printf("DEBUG: Evento NULL, saindo...\n");
             break;
         }
-
-        //printf("DEBUG: Evento %d - tipo=%d tempo=%d, relogio antes=%d\n", 
-               //evento->base, evento->tipo, evento->tempo, world->relogio);
-        
-       // printf("PROCESSANDO: tipo=%d tempo=%d heroi=%d base=%d\n",
-               //evento->tipo, evento->tempo, evento->heroi, evento->base);
         
         world->relogio = evento->tempo;
-        
-        //printf("DEBUG: relogio depois=%d, T_FIM_DO_MUNDO=%d\n", 
-               //world->relogio, T_FIM_DO_MUNDO);
 
         switch (evento->tipo) {
             case CHEGA:
@@ -75,11 +63,8 @@ int main() {
                 evento_morre(world, lef, evento->tempo, evento->heroi,  evento->base);
                 break;   
    /*          case FIM:
-                printf("DEBUG: Evento FIM encontrado\n");
                 break;
-            default:
-                printf("DEBUG: Tipo de evento desconhecido: %d\n", evento->tipo); */ 
-        }
+        }*/
         
         free(evento);
     }

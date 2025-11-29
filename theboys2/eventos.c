@@ -289,9 +289,9 @@ void evento_missao(struct mundo_t *world, /* struct fprio_t *lef, */ int tempo, 
         world->missoes_cumpridas++ ;
         printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
 
-/*         incrementa_experiencia(world, BMP) ;
+        incrementa_experiencia(world, B_apta_MP) ;
  
- */
+
         //incrementa a experiencia dos herois presentes na base mais proxima
         world->herois[B_apta_MP].experiencia++ ; 
     } /* else {
