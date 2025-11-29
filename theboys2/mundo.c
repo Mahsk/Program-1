@@ -111,8 +111,6 @@ struct mundo_t *cria_mundo() {
                 evento->tempo = aleat(0,4320) ;
                 evento->tipo = CHEGA ;
                 fprio_insere(lef, evento, CHEGA, evento->tempo) ;
-
-                
         }
 
         //Inicia evento para missao
@@ -122,6 +120,7 @@ struct mundo_t *cria_mundo() {
                 evento->base = -1 ;
                 evento->tempo = aleat(0, T_FIM_DO_MUNDO) ;
                 evento->tipo = MISSAO ;
+                evento->missao = i ;
                 fprio_insere(lef, evento, MISSAO, evento->tempo) ;
         }
 
