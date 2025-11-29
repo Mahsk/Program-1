@@ -232,10 +232,11 @@ void evento_morre(struct mundo_t *world, struct fprio_t *lef, int tempo, int her
     insere_lef(lef, tempo, AVISA, -1, base) ;
 }  
 
-void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef,  */int tempo, int missao) {
+void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int missao) {
 
     struct missoes_t *m = &world->missoes[missao] ;
     int menor_distancia = world->TamanhoMundo*2;
+    int menor_distancia_naoApta = world->TamanhoMundo*2 ;
     int BMP = -1;
     int B_apta_MP = -1;
    
@@ -258,13 +259,18 @@ void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef,  */int tempo, 
         printf("a base É APTA: %d\n", eh_apta) ;
 
         if(eh_apta == 1)  {
-            //verifica qual base é mais perto
+            //verifica qual base é mais perto e apta
             if (distancia < menor_distancia) {
                 menor_distancia = distancia ;
                 B_apta_MP = i ;
             }
-        }
+        } else 
+            if (distancia < menor_distancia_naoApta) {
+                menor_distancia_naoApta = distancia ;
+                BMP = i ;
+            }
     }
+        printf("BMP: %d\n", BMP) ;
         printf("menor distancia: %d\n", menor_distancia) ;
         printf("base APTA mais proxima: %d\n", B_apta_MP) ;
 
@@ -289,22 +295,28 @@ void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef,  */int tempo, 
     }  else {
         printf("ver qtdd de COMPOSTO V ANTES DE ENTRAR NO IF: %d\n", world->NCompostosV) ;
         printf("ver TEMPO antes de entrar no if %d\n", tempo) ;
+
         //se há compostos V e o tempo for multiplo de 2500
-        if(world->NCompostosV > 0 && tempo % 2500 == 0 ) {
+        if(world->NCompostosV > 0 ) {
 
-        printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
-        //decrementa a quantidade de compostosV
-        world->NCompostosV--;
-        printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
+            printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
+            //decrementa a quantidade de compostosV
+            world->NCompostosV--;
+            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
 
-        printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
-        //marca a missao como cumprida
-        world->missoes_cumpridas++;
-        printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
-
-        //chama o heroi mais experiente
-        int h_experiente = heroi_experiente(world, BMP) ;
-         printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
+            printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
+            //marca a missao como cumprida
+            world->missoes_cumpridas++;
+            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
+            
+            //chama o heroi mais experiente
+            int h_experiente = heroi_experiente(world, BMP) ;
+            printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
+            //o heroi mais experiente morre apos o uso do Composto V
+            insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
+            }
+        }
+    }
     
 /*       //o heroi mais experiente morre apos o uso do Composto V
         insere_lef(lef, tempo, MORRE, h_experiente, -1) ;
@@ -316,6 +328,4 @@ void evento_missao(struct mundo_t *world,/*  struct fprio_t *lef,  */int tempo, 
             printf("%6d: MISSAO %d IMPOSSIVEL\n", tempo, missao) ;        
             insere_lef(lef, tempo + (24*60), MISSAO,missao, -1 ); 
         } */
-        }
-    }
-}
+        

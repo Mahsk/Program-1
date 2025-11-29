@@ -57,7 +57,7 @@ int main() {
                 evento_viaja(world, lef, evento->tempo, evento->heroi,  evento->base);
                  break; 
             case MISSAO:
-                evento_missao(world,  /* lef,  */evento->tempo, evento->missao);
+                evento_missao(world,  lef, evento->tempo, evento->missao);
                 break; 
             case MORRE:
                 evento_morre(world, lef, evento->tempo, evento->heroi,  evento->base);

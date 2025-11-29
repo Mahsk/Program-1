@@ -88,21 +88,23 @@ int base_apta(struct mundo_t *world,struct bases_t *bases, struct missoes_t *mis
 }
 
 
-int heroi_experiente(struct mundo_t *world, int B_apta_MP) {
+int heroi_experiente(struct mundo_t *world, int BMP) {
 
-    int exp_heroi = -1;
-
+    int id_heroi_maisXP = -1 ;
+    int maior_exp = -1;
     for(int h = 0; h < world->NHerois; h++) {
-        if(world->herois[h].base_atual == B_apta_MP  && world->herois[h].experiencia > exp_heroi) 
-            exp_heroi = world->herois[h].experiencia ;
+        if(world->herois[h].base_atual == BMP  && world->herois[h].experiencia > maior_exp) {
+            maior_exp = world->herois[h].experiencia ;
+            id_heroi_maisXP = h ;
+        }
     }
-    return exp_heroi ;
+    return id_heroi_maisXP ;
 }
 
-void incrementa_experiencia(struct mundo_t *world, int B_apta_MP) {
+void incrementa_experiencia(struct mundo_t *world, int BMP) {
 
     for(int h = 0; h < world->NHerois; h++){
-        if(world->herois[h].base_atual == B_apta_MP)
+        if(world->herois[h].base_atual == BMP)
             world->herois[h].experiencia++ ;
     }
 }
