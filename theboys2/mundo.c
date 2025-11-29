@@ -75,6 +75,8 @@ struct mundo_t *cria_mundo() {
         world->bases[i].presentes = cjto_cria(world->NHerois) ;
         world->bases[i].espera = fila_cria() ;
         world->bases[i].habilidades = cjto_cria(world->NHabilidades) ;
+        world->bases[i].fila_max = 0 ;
+        world->bases[i].contador_missoes = 0 ;
 
     }
 

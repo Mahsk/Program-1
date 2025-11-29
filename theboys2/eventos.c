@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <limits.h>
+#include <string.h>
 #include "mundo.h"
 #include "entidade.h"
 #include "fprio.h"
@@ -95,6 +96,7 @@ void evento_avisa(struct mundo_t *world, struct fprio_t *lef, int tempo, int bas
         
         //retira o primeiro heroi da fila 
         int prim_fila ; 
+        int tamanho_max ;
         fila_retira(b->espera,&prim_fila) ;
 
         printf("ver herois ANTES DE AVISA: ") ;
@@ -103,8 +105,14 @@ void evento_avisa(struct mundo_t *world, struct fprio_t *lef, int tempo, int bas
 
         //adiciona o heroi na base
         cjto_insere(b->presentes,prim_fila) ;
+
         //atualiza a base
         world->herois[prim_fila].base_atual = base ;
+
+        //ver o tamanho maximo da base
+        tamanho_max = fila_tamanho(b->espera) ;
+        if(tamanho_max > b->fila_max)
+            b->fila_max =  tamanho_max ;
 
         //insere o evento ENTRA (agora, H’, B)
         insere_lef(lef,tempo,ENTRA,prim_fila,base,-1) ;
@@ -262,6 +270,7 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
         printf("a base É APTA: %d\n", eh_apta) ;
 
         if(eh_apta == 1)  {
+
             //verifica qual base é mais perto e apta
             if (distancia < menor_distancia) {
                 menor_distancia = distancia ;
@@ -292,6 +301,10 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
         printf("%6d: MISSAO %d CUMPRIDA BASE %d HABS: [ ",tempo, missao, B_apta_MP) ;
         cjto_imprime(world->bases[B_apta_MP].habilidades) ;
         printf(" ]\n") ;
+
+        //conta as missoes das bases
+        world->bases[B_apta_MP].contador_missoes++ ;
+
 
         for(int h = 0; h < world->NHerois; h++){
             //incrementa a experiencia dos herois presentes na base mais proxima
@@ -337,10 +350,28 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
 
 void evento_fim(struct mundo_t *world,int tempo) {
 
-    printf("%6d: FIM", tempo) ;
+    printf("%6d: FIM\n", tempo) ;
 
+    int cont_vivo = 0 ;
+    for(int h = 0; h < world->NHerois; h++){
+        if(world->herois[h].vivo == true) {
+            printf("HEROI %2d VIVO PAC %3d VEL %4d EXP %4d HABS [ ", h, world->herois[h].paciencia, world->herois[h].velocidade, world->herois[h].experiencia) ;
+            cjto_imprime(world->herois[h].habilidades) ;
+            printf(" ]\n") ;
+            cont_vivo++ ;
+        }else {
+            printf("HEROI %2d MORTO PAC %3d VEL %4d EXP %4d HABS [", h, world->herois[h].paciencia, world->herois[h].velocidade, world->herois[h].experiencia) ;
+            cjto_imprime(world->herois[h].habilidades) ;
+            printf(" ]\n") ;
+        }
+        printf("contar VIVOS %d\n", cont_vivo) ;
+    }
 
+    for(int i = 0; i < world->NBases; i++) {
 
+        printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", world->bases[i].id, world->bases[i].lotacao,world->bases[i].fila_max, world->bases[i].contador_missoes) ;
 
-    destroi_mundo(world) ;
+    } 
+     
+    /* destroi_mundo(world) ; */
 }

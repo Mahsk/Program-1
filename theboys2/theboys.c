@@ -13,24 +13,17 @@ int main() {
     struct mundo_t *world = cria_mundo();
     struct fprio_t *lef = fprio_cria();
 
-    if (!world || !lef) {
+    if (!world || !lef) 
         return 1;
-    }
-
+    
     iniciar_evento(lef, world);
-
-    printf("\n");
-    fprio_imprime(lef);
-    printf("\n");
-
 
     while (world->relogio < T_FIM_DO_MUNDO) {
         int tipo, prio;
         struct evento_t *evento = fprio_retira(lef, &tipo, &prio);
 
-        if (!evento) {
+        if (!evento)
             break;
-        }
         
         world->relogio = evento->tempo;
 
@@ -62,13 +55,13 @@ int main() {
             case MORRE:
                 evento_morre(world, lef, evento->tempo, evento->heroi,  evento->base);
                 break;   
-   /*          case FIM:
+            case FIM:
+                evento_fim(world,evento->tempo);
                 break;
-        }*/
         }
+        
         free(evento);
     }
-    
     destroi_mundo(world);
     fprio_destroi(lef);
     return 0;

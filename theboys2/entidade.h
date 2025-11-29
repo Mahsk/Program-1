@@ -27,6 +27,8 @@ struct bases_t {
     struct fila_t *espera ;
     struct coordenadas_t local ;
     struct cjto_t *habilidades ;
+    int fila_max;
+    int contador_missoes ;
 } ;
 
 struct missoes_t {
