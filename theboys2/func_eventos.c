@@ -110,3 +110,24 @@ void incrementa_experiencia(struct mundo_t *world, int BMP) {
             world->herois[h].experiencia++ ;
     }
 }
+
+int minimo_tentativas(struct mundo_t *world) {
+
+    int min_tent = world->missoes[0].tentativas ;
+    for(int i = 0; i < world->NMissoes ; i++) {
+        if(world->missoes[i].tentativas < min_tent)
+            min_tent = world->missoes[i].tentativas ;
+    }
+    return min_tent ;
+}
+
+
+int maximo_tentativas(struct mundo_t *world) {
+
+    int max_tent = world->missoes[0].tentativas ;
+    for(int i = 0; i < world->NMissoes ; i++) {
+        if(world->missoes[i].tentativas > max_tent)
+            max_tent = world->missoes[i].tentativas ;
+    }
+    return max_tent ;
+}

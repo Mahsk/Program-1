@@ -21,6 +21,7 @@ int main() {
     while (world->relogio < T_FIM_DO_MUNDO) {
         int tipo, prio;
         struct evento_t *evento = fprio_retira(lef, &tipo, &prio);
+        world->eventos_tratados++ ;
 
         if (!evento)
             break;

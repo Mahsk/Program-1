@@ -353,6 +353,7 @@ void evento_fim(struct mundo_t *world,int tempo) {
     printf("%6d: FIM\n", tempo) ;
 
     int cont_vivo = 0 ;
+    //percorre os herois
     for(int h = 0; h < world->NHerois; h++){
         if(world->herois[h].vivo == true) {
             printf("HEROI %2d VIVO PAC %3d VEL %4d EXP %4d HABS [ ", h, world->herois[h].paciencia, world->herois[h].velocidade, world->herois[h].experiencia) ;
@@ -367,11 +368,37 @@ void evento_fim(struct mundo_t *world,int tempo) {
         printf("contar VIVOS %d\n", cont_vivo) ;
     }
 
-/*     for(int i = 0; i < world->NBases; i++) {
+    //percorre as bases
+    for(int i = 0; i < world->NBases; i++) {
 
         printf("BASE %2d LOT %2d FILA MAX %2d MISSOES %d\n", world->bases[i].id, world->bases[i].lotacao,world->bases[i].fila_max, world->bases[i].contador_missoes) ;
 
-    }  */
-     
-    /* destroi_mundo(world) ; */
+    } 
+
+    //calcula os eventos tratados
+    printf("EVENTOS TRATADOS: %d\n",world->eventos_tratados) ;
+
+    int missao_cumprida = world->missoes_cumpridas ;
+    int total_missao = world->NMissoes ;
+    float media_missoes = ((float)missao_cumprida/total_missao) * 100 ;
+
+    //missoes cumpridas
+    printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", missao_cumprida, total_missao, media_missoes) ;
+
+
+    int minimo_tent = minimo_tentativas(world) ;
+    int maximo_tent = maximo_tentativas(world) ;
+    float media_tentativas = (float)(minimo_tent + maximo_tent)/2 ;
+
+    //tentativas de tentativas 
+    printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f\n", minimo_tent, maximo_tent,media_tentativas) ;
+
+
+    int total_de_heroi = world->NHerois ;
+    int herois_mortos = (total_de_heroi - cont_vivo) ;
+    float media_mortalidade = ((float)herois_mortos/total_de_heroi)*100 ;
+
+    //calcula taxa de mortalidade
+    printf("TAXA MORTALIDADE: %.1f%%\n", media_mortalidade) ;
 }
+     

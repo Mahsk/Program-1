@@ -51,6 +51,7 @@ struct mundo_t {
     int relogio ;
     int missoes_cumpridas ;
     int composto_V ;
+    int eventos_tratados ;
 } ;
 
 

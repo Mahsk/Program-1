@@ -26,6 +26,7 @@ struct mundo_t *cria_mundo() {
     world->TamanhoMundo = N_TAMANHO_MUNDO ;
     world->relogio = 0 ;
     world->missoes_cumpridas = 0 ;
+    world->eventos_tratados = 0 ;
 
     //Alocar os heróis 
     world->herois = malloc(sizeof(struct herois_t) * world->NHerois) ; //espaço para a estrutura do heroi para a quantidade de herois
