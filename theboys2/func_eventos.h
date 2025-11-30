@@ -23,6 +23,9 @@ int minimo_tentativas(struct mundo_t *world) ;
 
 int maximo_tentativas(struct mundo_t *world) ;
 
+int total_tentativas(struct mundo_t *world) ;
+
+
 
 
 #endif

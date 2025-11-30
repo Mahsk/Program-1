@@ -95,6 +95,7 @@ struct mundo_t *cria_mundo() {
         world->missoes[i].id = i ;
         world->missoes[i].local.x = aleat(0, N_TAMANHO_MUNDO - 1) ;
         world->missoes[i].local.y = aleat(0, N_TAMANHO_MUNDO - 1) ;
+        world->missoes[i].tentativas = 0 ;
 
         int cjto_habilidades = aleat(6,10) ;
         world->missoes[i].habilidades = cjto_aleat(cjto_habilidades, world->NHabilidades) ;

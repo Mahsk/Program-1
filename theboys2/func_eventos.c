@@ -131,3 +131,12 @@ int maximo_tentativas(struct mundo_t *world) {
     }
     return max_tent ;
 }
+
+int total_tentativas(struct mundo_t *world) {
+
+    int t_tent = 0;
+    for(int i = 0; i < world->NMissoes; i++) {
+        t_tent += world->missoes[i].tentativas ;
+    }   
+    return(t_tent) ;
+}

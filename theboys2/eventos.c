@@ -321,19 +321,14 @@ void evento_missao(struct mundo_t *world, struct fprio_t *lef, int tempo, int mi
         //se há compostos V e o tempo for multiplo de 2500
         if(world->NCompostosV > 0 && tempo % 2500 == 0 && BMP != -1) {
 
-            printf("ver qtdd de missao cumprida ANTES: %d\n", world->NCompostosV) ;
             //decrementa a quantidade de compostosV
             world->NCompostosV--;
-            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->NCompostosV) ;
 
-            printf("ver qtdd de missao cumprida ANTES: %d\n", world->missoes_cumpridas) ;
             //marca a missao como cumprida
             world->missoes_cumpridas++;
-            printf("ver qtdd de missao cumprida DEPOIS: %d\n", world->missoes_cumpridas) ;
             
             //chama o heroi mais experiente
             int h_experiente = heroi_experiente(world, BMP) ;
-            printf("heroi MAIS EXPERIENTE: %d\n", h_experiente) ;
 
             //o heroi mais experiente morre apos o uso do Composto V
             insere_lef(lef, tempo, MORRE, h_experiente, BMP,-1) ;
@@ -384,11 +379,13 @@ void evento_fim(struct mundo_t *world,int tempo) {
 
     //missoes cumpridas
     printf("MISSOES CUMPRIDAS: %d/%d (%.1f%%)\n", missao_cumprida, total_missao, media_missoes) ;
-
-
+    
     int minimo_tent = minimo_tentativas(world) ;
     int maximo_tent = maximo_tentativas(world) ;
-    float media_tentativas = (float)(minimo_tent + maximo_tent)/2 ;
+    int total_tent = total_tentativas(world);
+    printf("total_missao: %d\n", total_missao) ;
+    printf("total de tentativas: %d\n", total_tent) ;
+    float media_tentativas = (float)total_tent/ total_missao;
 
     //tentativas de tentativas 
     printf("TENTATIVAS/MISSAO: MIN %d, MAX %d, MEDIA %.1f\n", minimo_tent, maximo_tent,media_tentativas) ;
