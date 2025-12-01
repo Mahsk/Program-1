@@ -6,7 +6,7 @@
 #include "entidade.h"
 #include "eventos.h"
 #include "fprio.h"
-#include "func_eventos.h"
+#include "func_aux.h"
 
 int main() {
 
@@ -15,12 +15,12 @@ int main() {
     struct mundo_t *world ;
     struct fprio_t *lef ;
     
-    //Cria o mundo 
-    cria_mundo_MAIN(&world,&lef) ;
-
     if (!world || !lef) 
         return 1;
     
+    //Cria o mundo 
+    cria_mundo_MAIN(&world,&lef) ;
+
     //Inicia o mundo
     inicia_mundo_MAIN(world,lef) ;
 

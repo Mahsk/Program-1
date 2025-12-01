@@ -20,13 +20,18 @@ void cria_mundo_MAIN(struct mundo_t **world, struct fprio_t **lef) {
 
 void inicia_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) {
 
+    //Chama a função inicia evento
     iniciar_evento(lef, world);
 
+    //Para nao inicializar com lixo de memoria
     int tipo = 0;
     int tempo = 0;
+    //Inteiro para saber se a simulação terminou ou nao 
     int simulacao_chegou_fim = 0;
+    //Ponteiro para o evento retirado da fila
     struct evento_t *evento = NULL;
 
+    //Retira o proximo evento da fila de prioridade
     while (!simulacao_chegou_fim && (evento = fprio_retira(lef,&tipo,&tempo)) != NULL) {
         
         //Contador de eventos que será utilizado no FIM
@@ -68,6 +73,7 @@ void inicia_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) {
                 simulacao_chegou_fim = 1;
                 break;
         }
+        //Libera o ponteiro do evento
         free(evento) ;
     }
 }
@@ -76,8 +82,10 @@ void destroi_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) {
     destroi_mundo(world);
     fprio_destroi(lef);
 }
+
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) {
 
+    
     struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
     if(!evento)
         return NULL ;

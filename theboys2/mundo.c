@@ -5,16 +5,17 @@
 #include "entidade.h"
 #include "fila.h"
 #include "fprio.h"
-#include "func_eventos.h"
+#include "func_aux.h"
 #include "eventos.h"
 
 //Criar mundo 
 struct mundo_t *cria_mundo() {
 
-    //ponteiro para acessar
+    //Ponteiro para acessar
     struct mundo_t *world = malloc(sizeof(struct mundo_t)) ;
-   
-    if(!world) //se nao conseguir alocar o ponteiro 
+    
+    //Se nao conseguir alocar o ponteiro 
+    if(!world) 
         return NULL ;
 
     //Inicializa os dados globais 

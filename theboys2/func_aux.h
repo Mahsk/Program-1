@@ -1,12 +1,16 @@
 #ifndef  FUNC_EVENTOS
 #define FUNC_EVENTOS
 
+//Faz a função aleatoria
 int aleat(int min, int max) ;
 
+//Cria o mundo na main
 void cria_mundo_MAIN(struct mundo_t **world, struct fprio_t **lef) ;
 
+//Inicia o mundo na main
 void inicia_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) ;
 
+//Destroi o mundo na main
 void destroi_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) ;
 
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) ;

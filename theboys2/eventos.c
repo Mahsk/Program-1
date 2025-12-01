@@ -7,7 +7,7 @@
 #include "fprio.h"
 #include "fila.h"
 #include "eventos.h"
-#include "func_eventos.h"
+#include "func_aux.h"
 
 
 void evento_chega(struct mundo_t *world,struct fprio_t *lef, int tempo, int heroi, int base) {

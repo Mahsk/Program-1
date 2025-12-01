@@ -7,33 +7,37 @@
 // Retorno: ponteiro para a fila criada ou NULL se erro.
 struct fila_t *fila_cria () { 
 
+    //Aloca memoria para a fila
     struct fila_t *nova_fila = malloc(sizeof(struct fila_t)) ;
 
+    //Se a alocaçao falhar, retorna NULL
     if(!nova_fila)
         return NULL ;
 
+    //Inicializa todos os campos da fila com 0
     memset(nova_fila, 0, sizeof(struct fila_t)) ;
 
     return nova_fila ;
 }
 
 // Libera todas as estruturas de dados da fila, inclusive os itens.
-// Retorno: NULL.
 struct fila_t *fila_destroi (struct fila_t *f) {
 
+    //Verifica se é um ponteiro válido
     if(!f)
         return NULL ;
 
+    //Cria um ponteiro para o primeiro da fila
     struct fila_nodo_t *atual = f->prim ;
     struct fila_nodo_t *prox = NULL ;
     
+    //Enquanto nao chega no final, atualiza
     while(atual != NULL) {
         prox = atual->prox ;
         free(atual) ;
         atual = prox ;
     }
     free(f) ;
-
     return NULL;
 }
 
@@ -41,74 +45,92 @@ struct fila_t *fila_destroi (struct fila_t *f) {
 // Retorno: 1 se tiver sucesso ou 0 se falhar.
 int fila_insere (struct fila_t *f, int item){
     
-    if(!f) //verifica se f é um ponteiro válido
+    //Verifica se f é um ponteiro válido
+    if(!f) 
         return 0;   
     
+    //Aloca memória para um novo elemento
     struct fila_nodo_t *novo = malloc(sizeof(struct fila_nodo_t)) ;
 
-    if(!novo) //se a alocação do ponteiro falhar
+     //Se a alocação do ponteiro falhar
+    if(!novo)
         return 0 ;
 
+    //Inicializa os elementos com 0
     memset(novo, 0, sizeof(struct fila_nodo_t)) ;
     novo->item = item ;
 
+    //Se a fila está vazia, o novo elemento será tanto o ultimo e o primeiro da fila
     if(!f->num) {
         f->prim = novo ;
         f->ult = novo ;
     }
-    else {
+    else { //Se já contém elementos,o ultimo da fila aponta para o novo elemento criado e o ultimo se torna o novo
         f->ult->prox = novo ;
         f->ult = novo ;
     }
 
-    f->num++ ; //Aumenta o tamanho 
+    //Aumenta o tamanho 
+    f->num++ ; 
+    //A operaçao foi bem sucedida
     return 1 ;
 }
 
 
 // Retira o primeiro item da fila e o devolve
-// Retorno 1 se a operação foi bem sucedida e 0 caso contrário
 int fila_retira (struct fila_t *f, int *item) {
 
-    if(!f || !item) //verifica se f e item sao ponteiros válidos
+    //Verifica se f e item sao ponteiros válidos
+    if(!f || !item) 
         return 0 ;
 
-    struct fila_nodo_t *atual = f->prim ; //cria a estrutura atual para apontar para o inicio da fila
+    //Cria a estrutura atual para apontar para o inicio da fila
+    struct fila_nodo_t *atual = f->prim ; 
    
-    *item = atual->item ; //armazena o valor do inicio da fila em *item 
-    f->prim = atual->prox ; //atualiza a fila para o proximo elemento 
+    //Armazena o valor do inicio da fila em *item 
+    *item = atual->item ; 
+    //Atualiza a fila para o proximo elemento 
+    f->prim = atual->prox ; 
 
-    f->num-- ; //atualiza o tamanho da fila 
+    //Atualiza o tamanho da fila 
+    f->num-- ; 
     
-    if(!f->num) //atualiza o final da fila
+    //Atualiza o final da fila
+    if(!f->num) 
         f->ult = NULL;
 
-    free(atual) ; //libera o ponteiro 
-    
+    //Libera o ponteiro
+    free(atual) ;  
+    //Retorna 1 se sucesso
     return 1 ;
 }
 
 // Informa o número de itens na fila.
-// Retorno: N >= 0 ou -1 se erro.
 int fila_tamanho (struct fila_t *f) {
 
+    //Verifica se é um ponteiro valido
     if(!f)
         return -1 ;
     
+    //Retorna o tamanho da fila
     return f->num ;
 }
 
 // Imprime o conteúdo da fila 
 void fila_imprime (struct fila_t *f) {
 
+    //Verifica se é um ponteiro válido
     if(!f) 
         return ;
 
+    //Cria o ponteiro para o inicio da fila
     struct fila_nodo_t *atual = f->prim ;
 
+    //Enquanto nao chegar ao final
     while(atual != NULL) {
-
+        //Imprime
         printf("%d ", atual->item) ;
+        //Atualiza para o proximo
         atual = atual->prox ;
     }
 }
