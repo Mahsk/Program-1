@@ -4,62 +4,71 @@
 #include "fprio.h"
 
 
-
-// Cria uma fila vazia.
-// Retorno: ponteiro para a fila criada ou NULL se erro.
 struct fprio_t *fprio_cria () {
 
-    struct fprio_t *f = malloc(sizeof(struct fprio_t)) ; //aloca um novo nó na fila
+    //Aloca memoria para f
+    struct fprio_t *f = malloc(sizeof(struct fprio_t)) ; 
 
-    if(!f) //se a alocação falhar returna NULL
+     //Se a alocação falhar returna NULL
+    if(!f)
       return NULL;
     
-    memset(f,0,sizeof(struct fprio_t)) ; //inicia todos os campos com zero
-    return f ; //retorna a fila 
+    //inicializa todos os campos com zero
+    memset(f,0,sizeof(struct fprio_t)) ; 
+
+    //Retorna a fila 
+    return f ; 
 }
 
-// Libera todas as estruturas de dados da fila, inclusive os itens.
-// Retorno: NULL.
 struct fprio_t *fprio_destroi (struct fprio_t *f) { 
 
-    if(!f) //Verifica a validade da fila 
+    //Verifica o ponteiro
+    if(!f) 
      return NULL ;
 
-    struct fpnodo_t *atual = f->prim ; //estrutura auxiliar que vai apontar para cada elemento da fila, começando pelo primeiro
-    
-    while (atual != NULL) { //enquanto nao chega no final 
-      
+    //Estrutura auxiliar que vai apontar para cada elemento da fila, começando pelo primeiro
+    struct fpnodo_t *atual = f->prim ; 
+
+    //Enquanto nao chega no final 
+    while (atual != NULL) { 
+      //Cria um ponteiro apontando para o proximo
       struct fpnodo_t *temp = atual->prox ;
-      free(atual->item) ; //libera o conteudo
-      free(atual) ; //libera o nó
-      atual = temp ; //atual é atualizado com o proximo 
+      //Libera o conteudo
+      free(atual->item) ;
+      //Libera o nó
+      free(atual) ; 
+      //Atual é atualizado com o proximo 
+      atual = temp ; 
     }
 
-    free(f) ; //libera a estrutura da fila
+    //Libera a estrutura da fila
+    free(f) ; 
     return NULL ;
 }
 
-// Insere o item na fila, mantendo-a ordenada por prioridades crescentes.
-// Itens com a mesma prioridade devem respeitar a politica FIFO (retirar
-// na ordem em que inseriu).
-// Inserir duas vezes o mesmo item (o mesmo ponteiro) é um erro.
-// Retorno: número de itens na fila após a operação ou -1 se erro.
 int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio) {
 
+  //Verifica o ponteiro
   if (!f || !item) 
     return -1 ;
   
+  //Cria um ponteiro para o inicio da fila
   struct fpnodo_t *atual = f->prim ;
 
-  while (atual != NULL) { //percorre até não chegar no fim da fila 
-    if(atual->item == item) //se o item inserido por igual, dá erro
+  //Percorre até não chegar no fim da fila 
+  while (atual != NULL) { 
+    //Se o item inserido por igual, dá erro
+    if(atual->item == item) 
       return -1 ;
+    //Atualiza o atual pelo proximo
     atual = atual->prox ; 
   }
 
-  struct fpnodo_t *novo = malloc(sizeof(struct fpnodo_t)) ; //aloca um novo nó na fila 
+  //Aloca memoria para o novo
+  struct fpnodo_t *novo = malloc(sizeof(struct fpnodo_t)) ; 
 
-  if (!novo) //se a alocação não der certo, dá erro
+  //Se a alocação não der certo, dá erro
+  if (!novo) 
     return -1 ;
   
   novo->item = item ;
@@ -70,74 +79,78 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio) {
   struct fpnodo_t *ant = NULL ;
     atual = f->prim ;
 
-  while ((atual && atual->prio < prio) || (atual && atual->prio == prio)) { //Anda até achar uma prioridade maior ou igual
+  //Anda até achar uma prioridade maior ou igual
+  while ((atual && atual->prio < prio) || (atual && atual->prio == prio)) { 
     ant = atual ;
     atual = atual->prox;
   }
-
-    if (!ant) { //Insere no inicio
+    //Insere no inicio
+    if (!ant) { 
         novo->prox= f->prim;
         f->prim = novo ;
     } 
-    else { //insere no meio ou fim
+    else { //Insere no meio ou fim
         novo->prox = ant->prox ;
         ant->prox = novo ;
     }
 
-    
-    f->num++ ; //Aumenta o tamanho 
-    return f->num ; //Retorna o tamanho
+    //Aumenta o tamanho 
+    f->num++ ; 
+    //Retorna o tamanho
+    return f->num ; 
 }
 
-
-// Retira o primeiro item da fila e o devolve; o tipo e a prioridade
-// do item são devolvidos nos parâmetros "tipo" e "prio".
-// Retorno: ponteiro para o item retirado ou NULL se fila vazia ou erro.
 void *fprio_retira (struct fprio_t *f, int *tipo, int *prio) {
 
-    if(!f || !f->num || !tipo || !prio) //verifica se a fila, tipo e prioridade é válida 
+    //Verifica se a fila, tipo e prioridade é válida e se é vazia
+    if(!f || !f->num || !tipo || !prio)  
       return NULL;
-  
-    struct fpnodo_t *remove_item = f->prim ; //armazena o primeiro nó em remove item 
 
-    /*Se os ponteiros forem válidos, guarda os dados*/
+    //Cria um ponteiro para o primeiro da fila
+    struct fpnodo_t *remove_item = f->prim ; 
+
+    //Se os ponteiros forem válidos, guarda os dados
     *tipo = remove_item->tipo ;
     *prio = remove_item->prio ;
 
+    //Ponteiro, pois pode retornar qualquer dado
     void *item = remove_item->item ; 
-    f->prim = remove_item->prox ; //atualiza para o proximo
-    f->num-- ; //decrementa o tamanho 
 
-    free(remove_item) ;//libera o nó 
+    //Atualiza para o proximo
+    f->prim = remove_item->prox ; 
+    //Decrementa o tamanho 
+    f->num-- ; 
+
+    //Libera o ponteiro
+    free(remove_item) ;
     return item ;
 }
 
-// Informa o número de itens na fila.
-// Retorno: N >= 0 ou -1 se erro.
 int fprio_tamanho (struct fprio_t *f) {
 
+  //Verifica o ponteiro
   if (!f)
     return -1 ;
+  //Informa o numero de itens na fila
   return f->num ;
 }
 
-// Imprime o conteúdo da fila no formato "(tipo prio) (tipo prio) ..."
-// Para cada item deve ser impresso seu tipo e sua prioridade, com um
-// espaço entre valores, sem espaços antes ou depois e sem nova linha.
 void fprio_imprime (struct fprio_t *f) {
 
-  if(!f) //
+  //Verifica o ponteiro e se a fila esta vazia
+  if(!f || !f->num) //
     return ;
 
-  if(!f->num) //verifica o tamanho da fila 
-    return ;
-
-  struct fpnodo_t *imprime = f->prim ; //cria estrutura para percorrer a fila
+  //Cria o ponteiro apontando para o primeiro da filas
+  struct fpnodo_t *imprime = f->prim ;
   
-  int pos = 0; //inicializa a posição com zero 
-  while(imprime != NULL) { //percorre a fila até chegar no final 
+  //Inicia a posição com zero
+  int pos = 0; 
 
-    if(pos>0) //se a posição não estiver no começo, dá o espaço
+  //Percorre enquanto nao chega no final
+  while(imprime != NULL) {  
+    //Se a posição não estiver no começo, dá o espaço
+    if(pos>0) 
       printf(" ") ;
     printf("(%d %d)", imprime->tipo,  imprime->prio) ;
     imprime = imprime->prox ;
