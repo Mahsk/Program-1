@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "fprio.h": "c",
+        "eventos.h": "c"
+    }
+}

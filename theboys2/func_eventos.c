@@ -1,17 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "entidade.h"
 #include "mundo.h"
 #include "fprio.h"
 #include "eventos.h"
+#include "entidade.h"
 
+//Faz a função aleatoria
 int aleat(int min, int max) {
-    //return min + rand() % (max - min + 1) ;
+
     return (rand()%(max - min + 1)) + min;
 }
 
+void cria_mundo_MAIN(struct mundo_t **world, struct fprio_t **lef) {
+
+    *world = cria_mundo();
+    *lef = fprio_cria();
+}
+
+void inicia_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) {
+
+    iniciar_evento(lef, world);
+
+    int tipo = 0;
+    int tempo = 0;
+    int simulacao_chegou_fim = 0;
+    struct evento_t *evento = NULL;
+
+    while (!simulacao_chegou_fim && (evento = fprio_retira(lef,&tipo,&tempo)) != NULL) {
+        
+        //Contador de eventos que será utilizado no FIM
+        world->eventos_tratados++ ;
+        //Atualza o relogio com o tempo do evento
+        world->relogio = evento->tempo;
+
+        //Caso o evento seja do tipo x, executa
+        switch (evento->tipo) {
+            case CHEGA:
+                evento_chega(world, lef, evento->tempo, evento->heroi, evento->base);
+                break;
+            case ESPERA:
+                evento_espera(world, lef, evento->tempo, evento->heroi, evento->base);
+                break;
+            case DESISTE:
+                evento_desiste(world, lef, evento->tempo, evento->heroi, evento->base);
+                break;
+            case AVISA:
+                evento_avisa(world, lef, evento->tempo,  evento->base);
+                break;
+            case ENTRA:
+                evento_entra(world, lef, evento->tempo, evento->heroi,  evento->base);
+                break;
+            case SAI:
+                evento_sai(world, lef, evento->tempo, evento->heroi,  evento->base);
+                break;
+            case VIAJA:
+                evento_viaja(world, lef, evento->tempo, evento->heroi,  evento->base);
+                 break; 
+            case MISSAO:
+                evento_missao(world,  lef, evento->tempo, evento->missao);
+                break; 
+            case MORRE:
+                evento_morre(world, lef, evento->tempo, evento->heroi,  evento->base);
+                break;   
+            case FIM:
+                evento_fim(world,evento->tempo);
+                simulacao_chegou_fim = 1;
+                break;
+        }
+        free(evento) ;
+    }
+}
+
+void destroi_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) {
+    destroi_mundo(world);
+    fprio_destroi(lef);
+}
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) {
+
     struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
     if(!evento)
         return NULL ;

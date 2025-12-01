@@ -3,6 +3,12 @@
 
 int aleat(int min, int max) ;
 
+void cria_mundo_MAIN(struct mundo_t **world, struct fprio_t **lef) ;
+
+void inicia_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) ;
+
+void destroi_mundo_MAIN(struct mundo_t *world, struct fprio_t *lef) ;
+
 struct evento_t *cria_evento(int tempo, int tipo, int heroi, int base,int missao) ;
 
 struct evento_t *insere_lef(struct fprio_t *lef, int tempo, int tipo, int heroi, int base,int missao) ;

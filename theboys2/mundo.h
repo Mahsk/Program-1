@@ -12,7 +12,9 @@
 #define N_MISSOES T_FIM_DO_MUNDO / 100
 #define N_COMPOSTOS_V N_HABILIDADES * 3
 
+
 struct mundo_t *cria_mundo() ;
+
 void destroi_mundo(struct mundo_t *world) ;
 
 

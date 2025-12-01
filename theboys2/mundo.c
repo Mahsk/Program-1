@@ -9,9 +9,9 @@
 #include "eventos.h"
 
 //Criar mundo 
-
 struct mundo_t *cria_mundo() {
 
+    //ponteiro para acessar
     struct mundo_t *world = malloc(sizeof(struct mundo_t)) ;
    
     if(!world) //se nao conseguir alocar o ponteiro 
@@ -67,7 +67,7 @@ struct mundo_t *cria_mundo() {
         free(world) ;
         return NULL ;
     }
-
+    //Percorre as bases e inicializa cada base
     for(int i = 0; i < world->NBases; i++) {
         world->bases[i].id = i ;
         world->bases[i].local.x = aleat(0, N_TAMANHO_MUNDO - 1);
@@ -90,7 +90,7 @@ struct mundo_t *cria_mundo() {
         return NULL ;
     }
     
-    //Inicialização de cada missao
+    //Percorre as missoes e inicia elas
     for (int i = 0; i < world->NMissoes; i++) {
         world->missoes[i].id = i ;
         world->missoes[i].local.x = aleat(0, N_TAMANHO_MUNDO - 1) ;
@@ -128,7 +128,7 @@ struct mundo_t *cria_mundo() {
                 fprio_insere(lef, evento, MISSAO, evento->tempo) ;
         }
 
-        //Evento FIM 
+        //Evento FIM agendado no final da simulacao
         struct evento_t *evento = malloc(sizeof(struct evento_t)) ;
             evento->tempo = T_FIM_DO_MUNDO ;
             evento->tipo = FIM ;

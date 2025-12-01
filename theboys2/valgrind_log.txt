@@ -1,0 +1,134 @@
+==15187== Memcheck, a memory error detector
+==15187== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==15187== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==15187== Command: ./theboys
+==15187== Parent PID: 2990
+==15187== 
+==15187== 
+==15187== HEAP SUMMARY:
+==15187==     in use at exit: 14,452,200 bytes in 722,610 blocks
+==15187==   total heap usage: 5,850,173 allocs, 5,127,563 frees, 89,512,264 bytes allocated
+==15187== 
+==15187== 20 bytes in 1 blocks are definitely lost in loss record 1 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x109F96: iniciar_evento (mundo.c:132)
+==15187==    by 0x10A2BE: inicia_mundo_MAIN (func_eventos.c:23)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 160 bytes in 8 blocks are definitely lost in loss record 2 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B8E3: evento_missao (eventos.c:333)
+==15187==    by 0x10A46F: inicia_mundo_MAIN (func_eventos.c:61)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 160 bytes in 8 blocks are definitely lost in loss record 3 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B3F2: evento_morre (eventos.c:241)
+==15187==    by 0x10A498: inicia_mundo_MAIN (func_eventos.c:64)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,000 bytes in 50 blocks are definitely lost in loss record 4 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x109E8B: iniciar_evento (mundo.c:112)
+==15187==    by 0x10A2BE: inicia_mundo_MAIN (func_eventos.c:23)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 105,120 bytes in 5,256 blocks are definitely lost in loss record 5 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x109F1A: iniciar_evento (mundo.c:122)
+==15187==    by 0x10A2BE: inicia_mundo_MAIN (func_eventos.c:23)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 251,860 bytes in 12,593 blocks are definitely lost in loss record 6 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B93E: evento_missao (eventos.c:340)
+==15187==    by 0x10A46F: inicia_mundo_MAIN (func_eventos.c:61)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 354,460 bytes in 17,723 blocks are definitely lost in loss record 7 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10ACC1: evento_chega (eventos.c:45)
+==15187==    by 0x10A351: inicia_mundo_MAIN (func_eventos.c:40)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 354,460 bytes in 17,723 blocks are definitely lost in loss record 8 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10AE02: evento_desiste (eventos.c:80)
+==15187==    by 0x10A3A9: inicia_mundo_MAIN (func_eventos.c:46)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,861,100 bytes in 93,055 blocks are definitely lost in loss record 9 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B0FC: evento_entra (eventos.c:155)
+==15187==    by 0x10A3F7: inicia_mundo_MAIN (func_eventos.c:52)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,861,100 bytes in 93,055 blocks are definitely lost in loss record 10 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B1EB: evento_sai (eventos.c:186)
+==15187==    by 0x10A423: inicia_mundo_MAIN (func_eventos.c:55)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,861,100 bytes in 93,055 blocks are definitely lost in loss record 11 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B210: evento_sai (eventos.c:189)
+==15187==    by 0x10A423: inicia_mundo_MAIN (func_eventos.c:55)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,862,020 bytes in 93,101 blocks are definitely lost in loss record 12 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10AF43: evento_avisa (eventos.c:117)
+==15187==    by 0x10A3CB: inicia_mundo_MAIN (func_eventos.c:49)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,862,060 bytes in 93,103 blocks are definitely lost in loss record 13 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10AC6B: evento_chega (eventos.c:41)
+==15187==    by 0x10A351: inicia_mundo_MAIN (func_eventos.c:40)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 1,862,060 bytes in 93,103 blocks are definitely lost in loss record 14 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10AD6F: evento_espera (eventos.c:65)
+==15187==    by 0x10A37D: inicia_mundo_MAIN (func_eventos.c:43)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== 2,215,520 bytes in 110,776 blocks are definitely lost in loss record 15 of 15
+==15187==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15187==    by 0x10A54F: cria_evento (func_eventos.c:81)
+==15187==    by 0x10A5D2: insere_lef (func_eventos.c:95)
+==15187==    by 0x10B321: evento_viaja (eventos.c:216)
+==15187==    by 0x10A44F: inicia_mundo_MAIN (func_eventos.c:58)
+==15187==    by 0x10925C: main (theboys.c:23)
+==15187== 
+==15187== LEAK SUMMARY:
+==15187==    definitely lost: 14,452,200 bytes in 722,610 blocks
+==15187==    indirectly lost: 0 bytes in 0 blocks
+==15187==      possibly lost: 0 bytes in 0 blocks
+==15187==    still reachable: 0 bytes in 0 blocks
+==15187==         suppressed: 0 bytes in 0 blocks
+==15187== 
+==15187== For lists of detected and suppressed errors, rerun with: -s
+==15187== ERROR SUMMARY: 15 errors from 15 contexts (suppressed: 0 from 0)
