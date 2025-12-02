@@ -15,9 +15,6 @@ int main() {
     struct mundo_t *world ;
     struct fprio_t *lef ;
     
-    if (!world || !lef) 
-        return 1;
-    
     //Cria o mundo 
     cria_mundo_MAIN(&world,&lef) ;
 
