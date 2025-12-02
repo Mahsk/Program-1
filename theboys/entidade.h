@@ -8,7 +8,6 @@ struct coordenadas_t {
     int y ;
 } ;
 
-
 struct herois_t {
     int id ;
     struct cjto_t *habilidades ; 
@@ -54,6 +53,13 @@ struct mundo_t {
     int eventos_tratados ;
 } ;
 
+struct evento_t {
+    int base ;
+    int tempo ;
+    int tipo ;
+    int heroi ;
+    int missao ;
+} ;
 
 
 #endif

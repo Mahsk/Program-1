@@ -14,10 +14,6 @@ struct mundo_t *cria_mundo() {
     //Ponteiro para acessar
     struct mundo_t *world = malloc(sizeof(struct mundo_t)) ;
     
-    //Se nao conseguir alocar o ponteiro 
-    if(!world) 
-        return NULL ;
-
     //Inicializa os dados globais 
     world->NHerois = N_HEROIS ;
     world->NBases = N_BASES ;
@@ -33,7 +29,6 @@ struct mundo_t *cria_mundo() {
     world->herois = malloc(sizeof(struct herois_t) * world->NHerois) ; //espaço para a estrutura do heroi para a quantidade de herois
     
     if(!world->herois) {
-        free(world->herois) ;
         free(world) ;
         return NULL ;
     }
@@ -53,7 +48,6 @@ struct mundo_t *cria_mundo() {
         world->herois[i].habilidades = cjto_aleat(qntdd_habilidades, world->NHabilidades) ;
 
         if(!world->herois[i].habilidades) {
-            free(world->herois) ; //libera os herois
             free(world) ; 
             return NULL ;
         }
@@ -64,7 +58,6 @@ struct mundo_t *cria_mundo() {
     world->bases = malloc(sizeof(struct bases_t) * world->NBases) ;
 
     if(!world->bases) {
-        free(world->bases) ;
         free(world) ;
         return NULL ;
     }
@@ -86,7 +79,6 @@ struct mundo_t *cria_mundo() {
     world->missoes = malloc(sizeof(struct missoes_t) * world->NMissoes) ; 
 
     if(!world->missoes) {
-        free(world->missoes) ;
         free(world) ;
         return NULL ;
     }

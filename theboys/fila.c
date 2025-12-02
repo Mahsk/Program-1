@@ -111,7 +111,6 @@ int fila_tamanho (struct fila_t *f) {
     //Verifica se é um ponteiro valido
     if(!f)
         return -1 ;
-    
     //Retorna o tamanho da fila
     return f->num ;
 }

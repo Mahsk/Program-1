@@ -15,14 +15,6 @@
 struct fprio_t;
 struct mundo_t;
 
-struct evento_t {
-    int base ;
-    int tempo ;
-    int tipo ;
-    int heroi ;
-    int missao ;
-} ;
-
 //Inicia o evento em Mundo
 void iniciar_evento(struct fprio_t *lef, struct mundo_t *world) ;
 
